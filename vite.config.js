@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:8000', // URL del backend de FastAPI
+        target: 'https://crud-react-python-mongo-back-end.onrender.com', // URL del backend de FastAPI
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '/api/v1'),
       },

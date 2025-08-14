@@ -3,7 +3,7 @@ import { jwtDecode } from 'jwt-decode';
 // Async actions
 export const fetchItems = createAsyncThunk('inventory/fetchItems', async () => {
     const token = localStorage.getItem('token'); // Obtener el token del almacenamiento local
-    const response = await fetch('http://localhost:8000/api/v1/inventory', {
+    const response = await fetch('https://crud-react-python-mongo-back-end.onrender.com/api/v1/inventory', {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -22,7 +22,7 @@ export const addItem = createAsyncThunk('inventory/addItem', async (item) => {
     const decodedToken = jwtDecode(token); // Decodificar el token
     const userId = decodedToken.sub; // Obtener el user_id del token
 
-    const response = await fetch('http://localhost:8000/api/v1/inventory', {
+    const response = await fetch('https://crud-react-python-mongo-back-end.onrender.com/api/v1/inventory', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export const addItem = createAsyncThunk('inventory/addItem', async (item) => {
 
 export const updateItem = createAsyncThunk('inventory/updateItem', async (item) => {
     console.log('Updating item:', item);
-    const response = await fetch(`http://localhost:8000/api/v1/inventory/${item.id}`, {
+    const response = await fetch(`https://crud-react-python-mongo-back-end.onrender.com/api/v1/inventory/${item.id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ export const updateItem = createAsyncThunk('inventory/updateItem', async (item) 
 });
 
 export const deleteItem = createAsyncThunk('inventory/deleteItem', async (id) => {
-    await fetch(`http://localhost:8000/api/v1/inventory/${id}`, {
+    await fetch(`https://crud-react-python-mongo-back-end.onrender.com/api/v1/inventory/${id}`, {
         method: 'DELETE',
     });
     return id;

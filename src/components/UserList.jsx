@@ -9,7 +9,7 @@ const UserList = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('http://localhost:8000/api/v1/users')
+        fetch('https://crud-react-python-mongo-back-end.onrender.com/api/v1/users')
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Error al obtener la lista de usuarios.');
