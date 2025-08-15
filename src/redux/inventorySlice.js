@@ -87,6 +87,7 @@ const inventorySlice = createSlice({
                 state.items.push(action.payload);
             })
             .addCase(updateItem.fulfilled, (state, action) => {
+                print('action',action)
                 const index = state.items.findIndex((item) => item.id === action.payload.id);
                 if (index !== -1) {
                     state.items[index] = action.payload;
