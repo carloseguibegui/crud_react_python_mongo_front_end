@@ -36,18 +36,22 @@ export const addItem = createAsyncThunk('inventory/addItem', async (item) => {
 
 export const updateItem = createAsyncThunk('inventory/updateItem', async (item) => {
     console.log('Updating item:', item);
-    const response = await fetch(`https://crud-react-python-mongo-back-end.onrender.com/api/v1/inventory/${item.id}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(item),
-    });
-    console.log('Response from update:', response);
-    if (!response.ok) {
-        throw new Error('Failed to update item');
+    try {
+        const response = await fetch(`https://crud-react-python-mongo-back-end.onrender.com/api/v1/inventory/${item.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(item),
+        });
+        console.log('Response from update:', response);
+        if (!response.ok) {
+            throw new Error('Failed to update item');
+        }
+        return response.json();
+    } catch (error) {
+        console.error('Error updating item:', error);
     }
-    return response.json();
 });
 
 export const deleteItem = createAsyncThunk('inventory/deleteItem', async (id) => {
