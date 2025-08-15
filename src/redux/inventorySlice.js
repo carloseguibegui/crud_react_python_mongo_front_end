@@ -35,12 +35,16 @@ export const addItem = createAsyncThunk('inventory/addItem', async (item) => {
 });
 
 export const updateItem = createAsyncThunk('inventory/updateItem', async (item) => {
+    const token = localStorage.getItem('token');
+    const decodedToken = jwtDecode(token); // Decodificar el token
+    const userId = decodedToken.sub; // Obtener el user_id del token
     console.log('Updating item:', item);
     try {
         const response = await fetch(`https://crud-react-python-mongo-back-end.onrender.com/api/v1/inventory/${item.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(item),
         });
@@ -87,7 +91,7 @@ const inventorySlice = createSlice({
                 state.items.push(action.payload);
             })
             .addCase(updateItem.fulfilled, (state, action) => {
-                print('action',action)
+                console.log('Response from update:', action.payload);
                 const index = state.items.findIndex((item) => item.id === action.payload.id);
                 if (index !== -1) {
                     state.items[index] = action.payload;

@@ -1,14 +1,9 @@
 import {
-    DesktopOutlined,
-    FileOutlined,
     PieChartOutlined,
-    TeamOutlined,
-    UserOutlined,
 } from '@ant-design/icons';
 import {
     Breadcrumb,
     Layout,
-    Menu,
     theme,
     Typography,
     Button,
@@ -104,13 +99,6 @@ const Dashboard = () => {
                 collapsed={collapsed}
                 onCollapse={(value) => setCollapsed(value)}
             >
-                <div className="demo-logo-vertical" />
-                <Menu
-                    theme="dark"
-                    defaultSelectedKeys={['1']}
-                    mode="inline"
-                    items={items}
-                />
                 <div style={{ padding: '16px', textAlign: 'center' }}>
                     <Button type="primary" danger onClick={handleLogout}>
                         Cerrar Sesión
