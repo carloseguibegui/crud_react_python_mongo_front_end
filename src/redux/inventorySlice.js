@@ -43,6 +43,10 @@ export const updateItem = createAsyncThunk('inventory/updateItem', async (item) 
         },
         body: JSON.stringify(item),
     });
+    console.log('Response from update:', response);
+    if (!response.ok) {
+        throw new Error('Failed to update item');
+    }
     return response.json();
 });
 
