@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Form, Input, Button, Typography, notification } from 'antd'
-import { UserOutlined, LockOutlined, SmileOutlined } from '@ant-design/icons'
+import { UserOutlined, LockOutlined, SmileOutlined, CloseOutlined } from '@ant-design/icons'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
@@ -44,6 +44,7 @@ const Login = () => {
                 api.error({
                     message: 'Error al Iniciar Sesión',
                     description: data.detail || 'Error al iniciar sesión.',
+                    icon: <CloseOutlined style={{ color: '#ff4d4f' }} />,
                 })
             }
         } catch (error) {
