@@ -1,13 +1,13 @@
-import React from 'react';
-import { Form, Input, InputNumber, Button } from 'antd';
+import React from 'react'
+import { Form, Input, InputNumber, Button } from 'antd'
 
 const InventoryForm = ({ initialValues, onSubmit, onCancel }) => {
-    const [form] = Form.useForm();
+    const [form] = Form.useForm()
 
     const handleFinish = (values) => {
-        onSubmit(values);
-        form.resetFields();
-    };
+        onSubmit(values)
+        form.resetFields()
+    }
 
     return (
         <Form
@@ -46,7 +46,7 @@ const InventoryForm = ({ initialValues, onSubmit, onCancel }) => {
                 </Button>
             </Form.Item>
         </Form>
-    );
-};
+    )
+}
 
-export default InventoryForm;
+export default InventoryForm

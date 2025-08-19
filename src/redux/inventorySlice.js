@@ -1,26 +1,26 @@
-import { createSlice, createAsyncThunk, isRejectedWithValue } from '@reduxjs/toolkit';
-import { jwtDecode } from 'jwt-decode';
+import { createSlice, createAsyncThunk, isRejectedWithValue } from '@reduxjs/toolkit'
+import { jwtDecode } from 'jwt-decode'
 // Async actions
 export const fetchItems = createAsyncThunk('inventory/fetchItems', async () => {
-    const token = localStorage.getItem('token'); // Obtener el token del almacenamiento local
+    const token = localStorage.getItem('token') // Obtener el token del almacenamiento local
     const response = await fetch('https://crud-react-python-mongo-back-end.onrender.com/api/v1/inventory', {
         headers: {
             Authorization: `Bearer ${token}`,
         },
-    });
+    })
     if (response.status === 401) {
-        localStorage.removeItem('token'); // Eliminar el token si la sesión ha expirado
-        window.location.href = '/login'; // Redirigir al usuario a la página de inicio de sesión
-        return isRejectedWithValue('Unauthorized access, please log in again. Token expired / Token expirado');
+        localStorage.removeItem('token') // Eliminar el token si la sesión ha expirado
+        window.location.href = '/login' // Redirigir al usuario a la página de inicio de sesión
+        return isRejectedWithValue('Unauthorized access, please log in again. Token expired / Token expirado')
     }
-    const data = await response.json();
-    return data;
-});
+    const data = await response.json()
+    return data
+})
 
 export const addItem = createAsyncThunk('inventory/addItem', async (item) => {
-    const token = localStorage.getItem('token');
-    const decodedToken = jwtDecode(token); // Decodificar el token
-    const userId = decodedToken.sub; // Obtener el user_id del token
+    const token = localStorage.getItem('token')
+    const decodedToken = jwtDecode(token) // Decodificar el token
+    const userId = decodedToken.sub // Obtener el user_id del token
 
     const response = await fetch('https://crud-react-python-mongo-back-end.onrender.com/api/v1/inventory', {
         method: 'POST',
@@ -29,16 +29,16 @@ export const addItem = createAsyncThunk('inventory/addItem', async (item) => {
             Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ ...item, user_id: userId }), // Agregar user_id al cuerpo
-    });
+    })
 
-    return response.json();
-});
+    return response.json()
+})
 
 export const updateItem = createAsyncThunk('inventory/updateItem', async (item) => {
-    const token = localStorage.getItem('token');
-    const decodedToken = jwtDecode(token); // Decodificar el token
-    const userId = decodedToken.sub; // Obtener el user_id del token
-    console.log('Updating item:', item);
+    const token = localStorage.getItem('token')
+    const decodedToken = jwtDecode(token) // Decodificar el token
+    const userId = decodedToken.sub // Obtener el user_id del token
+    console.log('Updating item:', item)
     try {
         const response = await fetch(`https://crud-react-python-mongo-back-end.onrender.com/api/v1/inventory/${item.id}`, {
             method: 'PUT',
@@ -47,23 +47,23 @@ export const updateItem = createAsyncThunk('inventory/updateItem', async (item) 
                 Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(item),
-        });
-        console.log('Response from update:', response);
+        })
+        console.log('Response from update:', response)
         if (!response.ok) {
-            throw new Error('Failed to update item');
+            throw new Error('Failed to update item')
         }
-        return response.json();
+        return response.json()
     } catch (error) {
-        console.error('Error updating item:', error);
+        console.error('Error updating item:', error)
     }
-});
+})
 
 export const deleteItem = createAsyncThunk('inventory/deleteItem', async (id) => {
     await fetch(`https://crud-react-python-mongo-back-end.onrender.com/api/v1/inventory/${id}`, {
         method: 'DELETE',
-    });
-    return id;
-});
+    })
+    return id
+})
 
 // Slice
 const inventorySlice = createSlice({
@@ -77,30 +77,30 @@ const inventorySlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchItems.pending, (state) => {
-                state.loading = true;
+                state.loading = true
             })
             .addCase(fetchItems.fulfilled, (state, action) => {
-                state.loading = false;
-                state.items = action.payload;
+                state.loading = false
+                state.items = action.payload
             })
             .addCase(fetchItems.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.error.message;
+                state.loading = false
+                state.error = action.error.message
             })
             .addCase(addItem.fulfilled, (state, action) => {
-                state.items.push(action.payload);
+                state.items.push(action.payload)
             })
             .addCase(updateItem.fulfilled, (state, action) => {
-                console.log('Response from update:', action.payload);
-                const index = state.items.findIndex((item) => item.id === action.payload.id);
+                console.log('Response from update:', action.payload)
+                const index = state.items.findIndex((item) => item.id === action.payload.id)
                 if (index !== -1) {
-                    state.items[index] = action.payload;
+                    state.items[index] = action.payload
                 }
             })
             .addCase(deleteItem.fulfilled, (state, action) => {
-                state.items = state.items.filter((item) => item.id !== action.payload);
-            });
+                state.items = state.items.filter((item) => item.id !== action.payload)
+            })
     },
-});
+})
 
-export default inventorySlice.reducer;
+export default inventorySlice.reducer

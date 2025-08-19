@@ -1,23 +1,23 @@
 import {
     PieChartOutlined,
-} from '@ant-design/icons';
+} from '@ant-design/icons'
 import {
     Breadcrumb,
     Layout,
     theme,
     Typography,
     Button,
-} from 'antd';
-import { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import InventoryTable from './InventoryTable';
-import InventoryForm from './InventoryForm';
-import { addItem, updateItem, fetchItems } from '../redux/inventorySlice';
+} from 'antd'
+import { useState, useEffect } from 'react'
+import { useAuth } from '../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import InventoryTable from './InventoryTable'
+import InventoryForm from './InventoryForm'
+import { addItem, updateItem, fetchItems } from '../redux/inventorySlice'
 
-const { Header, Content, Footer, Sider } = Layout;
-const { Title } = Typography;
+const { Header, Content, Footer, Sider } = Layout
+const { Title } = Typography
 
 function getItem(label, key, icon, children) {
     return {
@@ -25,72 +25,61 @@ function getItem(label, key, icon, children) {
         icon,
         children,
         label,
-    };
+    }
 }
 
 const items = [
-    getItem('Dashboard', '1', <PieChartOutlined />),
-    // getItem('Option 2', '2', <DesktopOutlined />),
-    // getItem('User', 'sub1', <UserOutlined />, [
-    //     getItem('Tom', '3'),
-    //     getItem('Bill', '4'),
-    //     getItem('Alex', '5'),
-    // ]),
-    // getItem('Team', 'sub2', <TeamOutlined />, [
-    //     getItem('Team 1', '6'),
-    //     getItem('Team 2', '8'),
-    // ]),
-    // getItem('Files', '9', <FileOutlined />),
-];
+    getItem('Dashboard', '1', <PieChartOutlined />)
+]
 
 const Dashboard = () => {
-    const { isAuthenticated, logout } = useAuth();
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const [collapsed, setCollapsed] = useState(false);
-    const [editingItem, setEditingItem] = useState(null);
-    const [isFormVisible, setFormVisible] = useState(false);
+    const { isAuthenticated, logout } = useAuth()
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const [collapsed, setCollapsed] = useState(false)
+    const [editingItem, setEditingItem] = useState(null)
+    const [isFormVisible, setFormVisible] = useState(false)
     const {
         token: { colorBgContainer, borderRadiusLG },
-    } = theme.useToken();
+    } = theme.useToken()
 
     useEffect(() => {
         if (!isAuthenticated) {
-            navigate('/login'); // Redirigir al login si no está autenticado
+            navigate('/login') // Redirigir al login si no está autenticado
         }
-    }, [isAuthenticated, navigate]);
+    }, [isAuthenticated, navigate])
 
     useEffect(() => {
-        dispatch(fetchItems()); // Usar acción de Redux para obtener los datos
-    }, [dispatch]);
+        dispatch(fetchItems()) // Usar acción de Redux para obtener los datos
+    }, [dispatch])
 
     const handleLogout = () => {
-        logout();
-        navigate('/login');
-    };
+        logout()
+        navigate('/login')
+    }
 
     const handleAdd = () => {
-        setEditingItem(null);
-        setFormVisible(true);
-    };
+        setEditingItem(null)
+        setFormVisible(true)
+    }
 
     const handleEdit = (item) => {
-        setEditingItem(item);
-        setFormVisible(true);
-    };
+        setEditingItem(item)
+        setFormVisible(true)
+    }
 
     const handleSubmit = (item) => {
         if (editingItem) {
-            dispatch(updateItem({ ...editingItem, ...item }));
+            dispatch(updateItem({ ...editingItem, ...item }))
         } else {
-            dispatch(addItem(item));
+            dispatch(addItem(item))
         }
-        setFormVisible(false);
-    };
+        setFormVisible(false)
+    }
 
     const handleCancel = () => {
-        setFormVisible(false);
-    };
+        setFormVisible(false)
+    }
 
     return (
         <Layout style={{ minHeight: '100vh' }}>
@@ -155,7 +144,7 @@ const Dashboard = () => {
                 </Footer>
             </Layout>
         </Layout>
-    );
-};
+    )
+}
 
-export default Dashboard;
+export default Dashboard

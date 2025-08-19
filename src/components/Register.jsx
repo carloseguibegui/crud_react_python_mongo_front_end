@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import { Form, Input, Button, Typography, message, notification } from 'antd';
-import { UserOutlined, LockOutlined, SmileOutlined } from '@ant-design/icons';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import React, { useState } from 'react'
+import { Form, Input, Button, Typography, message, notification } from 'antd'
+import { UserOutlined, LockOutlined, SmileOutlined, CloseOutlined } from '@ant-design/icons'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 
-const { Title } = Typography;
+const { Title } = Typography
 
 const Register = () => {
-    const [loading, setLoading] = useState(false);
-    const { login } = useAuth();
-    const [api, contextHolder] = notification.useNotification();
-    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false)
+    const { login } = useAuth()
+    const [api, contextHolder] = notification.useNotification()
+    const navigate = useNavigate()
 
     const handleRegister = async (values) => {
-        setLoading(true);
+        setLoading(true)
         try {
             const response = await fetch('https://crud-react-python-mongo-back-end.onrender.com/api/v1/auth/register', {
                 method: 'POST',
@@ -21,28 +21,33 @@ const Register = () => {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
                 body: new URLSearchParams(values),
-            });
-            const data = await response.json();
+            })
+            const data = await response.json()
             if (response.ok) {
-                message.success(data.message);
-                login(data.token); // Usar el método login del AuthContext
+                message.success(data.message)
+                login(data.token) // Usar el método login del AuthContext
                 api.success({
                     message: 'Registro Exitoso',
                     description: data.message,
                     icon: <SmileOutlined style={{ color: '#108ee9' }} />,
-                });
-                await new Promise(resolve => setTimeout(resolve, 1000));
-                navigate('/dashboard');
+                })
+                await new Promise(resolve => setTimeout(resolve, 1000))
+                navigate('/dashboard')
             } else {
-                message.error(data.detail || 'Error al registrar usuario.');
+                api.error({
+                    message: 'Error al registrar usuario',
+                    description: data.detail || 'Error al registrar usuario.',
+                    icon: <CloseOutlined style={{ color: '#ff4d4f' }} />,
+                })
+                message.error(data.detail || 'Error al registrar usuario.')
             }
         } catch (error) {
-            console.error('Error registering user:', error);
-            message.error('Error de conexión con el servidor.');
+            console.error('Error registering user:', error)
+            message.error('Error de conexión con el servidor.')
         } finally {
-            setLoading(false);
+            setLoading(false)
         }
-    };
+    }
 
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -79,7 +84,7 @@ const Register = () => {
                 </Form>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Register;
+export default Register

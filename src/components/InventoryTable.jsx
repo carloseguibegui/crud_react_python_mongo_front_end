@@ -1,27 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
 import {
     Table,
     Typography,
     Button,
     Space,
     Popconfirm,
-} from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchItems, deleteItem } from '../redux/inventorySlice';
+} from 'antd'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchItems, deleteItem } from '../redux/inventorySlice'
 
 
 const InventoryTable = ({ onEdit }) => {
-    const dispatch = useDispatch();
-    const { items, loading } = useSelector((state) => state.inventory);
+    const dispatch = useDispatch()
+    const { items, loading } = useSelector((state) => state.inventory)
 
     useEffect(() => {
-        dispatch(fetchItems());
-    }, [dispatch]);
+        dispatch(fetchItems())
+    }, [dispatch])
 
     const handleDelete = (id) => {
-        console.log('Deleting item with id:', id); // Log para depuración
-        dispatch(deleteItem(id));
-    };
+        console.log('Deleting item with id:', id) // Log para depuración
+        dispatch(deleteItem(id))
+    }
 
 
     const COLUMNS = [
@@ -71,7 +71,7 @@ const InventoryTable = ({ onEdit }) => {
                 </Space>
             ),
         },
-    ];
+    ]
 
     return (
         <Table
@@ -81,7 +81,7 @@ const InventoryTable = ({ onEdit }) => {
             loading={loading}
             pagination={{ pageSize: 5 }}
         />
-    );
-};
+    )
+}
 
-export default InventoryTable;
+export default InventoryTable

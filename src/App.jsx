@@ -1,12 +1,12 @@
-import { Provider } from 'react-redux';
+import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import './App.css'
-import Register from './components/Register';
-import Login from './components/Login';
-import Dashboard from './components/Dashboard';
-import ProtectedRoute from './components/ProtectedRoute';
-import { AuthProvider } from './context/AuthContext';
-import store from './redux/store';
+import Register from './components/Register'
+import Login from './components/Login'
+import Dashboard from './components/Dashboard'
+import ProtectedRoute from './components/ProtectedRoute'
+import { AuthProvider } from './context/AuthContext'
+import store from './redux/store'
 
 function App() {
   return (
