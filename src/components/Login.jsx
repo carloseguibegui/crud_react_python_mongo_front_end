@@ -59,7 +59,7 @@ const Login = () => {
 
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-            <div style={{ width: '100%', maxWidth: '400px', padding: '20px', background: '#fff', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)' }}>
+            <div style={{ width: '100%', maxWidth: '400px', padding: '24px', background: '#fff', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)' }}>
                 {contextHolder}
                 <Title level={2} style={{ textAlign: 'center' }}>Inicio de Sesión</Title>
                 <Form layout="vertical" onFinish={(values) => handleLogin(values)}>
